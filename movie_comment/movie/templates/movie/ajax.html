@@ -1,0 +1,50 @@
+{% block content %}
+<h3>Django Ajax Movie Comment Research</h3>
+
+<form method="GET" action="">
+    {% csrf_token %}
+    {{ form }}
+    <!--<input type="text" id="id_keyword">-->
+    <input type="submit" value="検索" />
+</form>
+{% endblock %}
+
+<div id="count"></div>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script>
+    $("#id_keyword").bind('input propertychange', function() {
+        var keyword = $(this).val();
+        $.ajax({
+            url: '{% url "ajax_search" %}',
+            data:{
+                    "keyword": keyword
+            },
+            type:'GET',
+            dataType: 'json',
+            success: function(data) {
+                //$('#count').html("<p>" + typeof data.count + "個結果が見つかりました</p>")
+                if(typeof data.count != 'number'){
+                    $('#count').html("<p>" + data.count + "</p>")
+                } else {
+                    $('#count').html("<p>" + data.count + "個結果が見つかりました</p>")
+                }
+            },
+            error: function(data) {
+                $('#count').html("<p>error : " + data.count + "</p>")
+            },
+        });
+    });
+</script>
+        
+<hr>
+
+{% if comments_list %}
+<p>共找到 {{ comments_list | length }} 条记录。</p>
+   <ul>
+    {% for comment in comments_list %}
+        <li>{{ comment }}</li>
+        <hr>
+    {% endfor %}
+   </ul>
+{% endif %}

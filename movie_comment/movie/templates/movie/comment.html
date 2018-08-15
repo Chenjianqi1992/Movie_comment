@@ -1,0 +1,13 @@
+<h>
+{{m_name}}
+</h>
+{% if com_list %}
+    <ul>
+    {% for comment in com_list %}
+        <li>{{ comment.comment_text }}</li>
+        <hr>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No movie data are available.</p>
+{% endif %}

@@ -1,0 +1,9 @@
+{% if movie_list %}
+    <ul>
+    {% for movie in movie_list %}
+        <li><a href="/movies/{{ movie.movie_id }}/comments">{{ movie.movie_title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No movie data are available.</p>
+{% endif %}
